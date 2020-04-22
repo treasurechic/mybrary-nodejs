@@ -1,6 +1,7 @@
-// if(process.env.NODE_ENV !== 'production'){
-//     require('dotenv').parse()
-// }
+if(process.env.NODE_ENV !== 'production'){
+    const dotenv = require("dotenv");
+    dotenv.config();
+}
 
 const express = require('express')
 const app  = express()
@@ -18,7 +19,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit:'10mb', extended:false }))
 
 const mongoose = require('mongoose') 
-mongoose.connect('mongodb://localhost/mybrary', {useNewUrlParser:true})
+mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser:true})
 const db = mongoose.connection
 db.on('error', error=> console.error(error))
 db.once('open', () => console.log('connected to Mongoose'))
